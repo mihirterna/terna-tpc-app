@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -108,23 +109,34 @@ public class SignUpActivity extends AppCompatActivity {
                 TextUtils.isEmpty(pswd)||TextUtils.isEmpty(conpswd)||TextUtils.isEmpty(city)||TextUtils.isEmpty(dateOfBirth))
             Toast.makeText(this,"Please enter proper credentials!",Toast.LENGTH_LONG).show();
         else {
-            pd.setMessage("Registering...");
-            pd.show();
-            final UserInfo userInfo = new UserInfo(nam, mail, id, dateOfBirth, city, ch);
-            firebaseAuth.createUserWithEmailAndPassword(mail,pswd)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+            if(!pswd.equals(conpswd))
+                Toast.makeText(this,"Mind the password!",Toast.LENGTH_LONG).show();
+            else {
+                pd.setMessage("Registering...");
+                pd.show();
+                final UserInfo userInfo = new UserInfo(nam, mail, id, dateOfBirth, city, ch);
+                firebaseAuth.createUserWithEmailAndPassword(mail, pswd)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
                                 pd.dismiss();
-                                String key = databaseReference.push().getKey();
-                                databaseReference.child(key).setValue(userInfo);
+                                if (task.isSuccessful()) {
+                                    String key = databaseReference.push().getKey();
+                                    databaseReference.child(key).setValue(userInfo);
+                                    Toast.makeText(getApplicationContext(),"Successful Registration! Now Login.",Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
+                                    finish();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, "Some error occurred!", Toast.LENGTH_LONG).show();
+                                }
                             }
-                            else{
-                                Toast.makeText(SignUpActivity.this,"Some error occurred!",Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                        }).addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 }

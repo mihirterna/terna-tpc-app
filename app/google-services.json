@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "971407708788",
-    "firebase_url": "https://baseonfire-74688.firebaseio.com",
-    "project_id": "baseonfire-74688",
-    "storage_bucket": "baseonfire-74688.appspot.com"
+    "project_number": "660653166394",
+    "firebase_url": "https://tpcterna.firebaseio.com",
+    "project_id": "tpcterna",
+    "storage_bucket": "tpcterna.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:971407708788:android:b2e2b11bf6ef8aa8",
+        "mobilesdk_app_id": "1:660653166394:android:2bdccf817ad88862",
         "android_client_info": {
-          "package_name": "com.exception.baseonfire"
+          "package_name": "org.terna.tpc"
         }
       },
       "oauth_client": [
         {
-          "client_id": "971407708788-n0qhljt5tjbkqc711u51lgeo690migfh.apps.googleusercontent.com",
+          "client_id": "660653166394-09kbsqdm80erba03djnji1hj9mhf2jbl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAJ--2CdrfXeCilYePuyd5ze6RuH9Zx57A"
+          "current_key": "AIzaSyBEZf5DqLG0VQsLknwOraccGi-DrOk_B2A"
         }
       ],
       "services": {

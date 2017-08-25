@@ -23,6 +23,7 @@
     <string name="signUp">Sign Up</string>
     <string name="new_acc"><u>Create new account</u></string>
     <string name="goToLogin"><u>Back to Login</u></string>
+    <string name="logout">Logout</string>
 
     <string-array name="spinner_list">
         <item>Web Development</item>

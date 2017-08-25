@@ -1,23 +1,39 @@
 package org.terna.tpc;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText loginID,loginPassword;
-    private Button loginButton;
+    private ProgressDialog pd;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        pd = new ProgressDialog(this);
+        firebaseAuth = FirebaseAuth.getInstance();
+       /*if(firebaseAuth.getCurrentUser() != null) {
+            startActivity(new Intent(this, StudentDashboardActivity.class));
+            finish();
+        }*/
         final TextView goToSignUp = (TextView)findViewById(R.id.loginNew);
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,15 +43,45 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-        loginButton = (Button)findViewById(R.id.loginButton);
+        final Button loginButton = (Button)findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this,loginID.getText().toString(),Toast.LENGTH_SHORT).show();
-                Toast.makeText(LoginActivity.this,loginPassword.getText().toString(),Toast.LENGTH_SHORT).show();
+                loginUser();
             }
         });
         loginID = (TextInputEditText)findViewById(R.id.loginId);
         loginPassword = (TextInputEditText)findViewById(R.id.loginPassword);
+    }
+
+    private void loginUser(){
+        String email = loginID.getText().toString().trim();
+        String password = loginPassword.getText().toString().trim();
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(LoginActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
+        }
+        else{
+            pd.setMessage("Logging in...");
+            pd.show();
+            firebaseAuth.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            pd.dismiss();
+                            if(task.isSuccessful()){
+                                startActivity(new Intent(LoginActivity.this,StudentDashboardActivity.class));
+                                finish();
+                            }else{
+                                Toast.makeText(LoginActivity.this,"Some error occurred!",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(this, new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 }
