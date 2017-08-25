@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "971407708788",
+    "firebase_url": "https://baseonfire-74688.firebaseio.com",
+    "project_id": "baseonfire-74688",
+    "storage_bucket": "baseonfire-74688.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971407708788:android:b2e2b11bf6ef8aa8",
+        "android_client_info": {
+          "package_name": "com.exception.baseonfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971407708788-n0qhljt5tjbkqc711u51lgeo690migfh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ--2CdrfXeCilYePuyd5ze6RuH9Zx57A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

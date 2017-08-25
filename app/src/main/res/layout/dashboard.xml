@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.terna.tpc.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_weight="1"
+    android:layout_width="match_parent"
+    android:background="#f8f9fe"
+    android:layout_height="match_parent">
+
+    <!--Notification Button-->
+    <Button
+        android:drawableTop="@drawable/noti"
+        android:text="@string/notify"
+        style="@style/MainActivityButton"
+        android:id="@+id/notification_button" />
+
+    <!--Check Status Button-->
+    <Button
+        android:text="@string/check_status"
+        style="@style/MainActivityButton"
+        android:drawableTop="@drawable/chk"
+        android:id="@+id/status_check" />
+
+    <!--Add Details Button-->
+    <Button
+        android:text="@string/add_details"
+        style="@style/MainActivityButton"
+        android:drawableTop="@drawable/ad"
+        android:id="@+id/add_Details" />
+
+    <!--Add Details Button-->
+    <Button
+        android:text="@string/edit_details"
+        style="@style/MainActivityButton"
+        android:drawableTop="@drawable/edt"
+        android:id="@+id/edit_Details" />
+
+
+</org.terna.tpc.DashboardLayout>

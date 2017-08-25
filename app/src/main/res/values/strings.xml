@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">TPC</string>
+    <string name="welcome_msg">Welcome</string>
+    <string name="college_url">www.terna.org</string>
+
+    <string name="logo">College Logo</string>
+
+    <string name="notify">Notifications</string>
+    <string name="add_details">Add details</string>
+    <string name="edit_details">Edit details</string>
+    <string name="check_status">Check Status</string>
+
+    <string name="get_name">Enter name</string>
+    <string name="get_email">Enter email</string>
+    <string name="get_password">Enter password</string>
+    <string name="confirm_pass">Confirm password</string>
+    <string name="get_city">Enter nearest station</string>
+    <string name="get_id">Enter ID</string>
+    <string name="spinner_title">Choose domain</string>
+    <string name="get_dob">Click to set Date Of Birth</string>
+
+    <string name="login">Login</string>
+    <string name="signUp">Sign Up</string>
+    <string name="new_acc"><u>Create new account</u></string>
+    <string name="goToLogin"><u>Back to Login</u></string>
+
+    <string-array name="spinner_list">
+        <item>Web Development</item>
+        <item>Android Development</item>
+        <item>Database</item>
+        <item>Big data/HADOOP</item>
+    </string-array>
+</resources>
