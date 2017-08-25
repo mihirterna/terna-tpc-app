@@ -42,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         final Button signUp = (Button)findViewById(R.id.signup_button);
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -110,13 +110,15 @@ public class SignUpActivity extends AppCompatActivity {
         else {
             pd.setMessage("Registering...");
             pd.show();
-            UserInfo userInfo = new UserInfo(nam, mail, id, dateOfBirth, city, ch);
+            final UserInfo userInfo = new UserInfo(nam, mail, id, dateOfBirth, city, ch);
             firebaseAuth.createUserWithEmailAndPassword(mail,pswd)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 pd.dismiss();
+                                String key = databaseReference.push().getKey();
+                                databaseReference.child(key).setValue(userInfo);
                             }
                             else{
                                 Toast.makeText(SignUpActivity.this,"Some error occurred!",Toast.LENGTH_LONG).show();
