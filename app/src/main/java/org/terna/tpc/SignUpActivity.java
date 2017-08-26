@@ -40,7 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         dob = (EditText)findViewById(R.id.dobText);
         choice = (Spinner) findViewById(R.id.teamChoice);
         submitButton=(Button) findViewById(R.id.signup_button);
-        mDb= FirebaseDatabase.getInstance().getReference();
+        mDb= FirebaseDatabase.getInstance().getReference("Student");
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
