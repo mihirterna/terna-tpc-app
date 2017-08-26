@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         dob = (EditText)findViewById(R.id.dobText);
         choice = (Spinner) findViewById(R.id.teamChoice);
         final Button submitButton=(Button) findViewById(R.id.signup_button);
-        databaseReference= FirebaseDatabase.getInstance().getReference("Student");
+        databaseReference= FirebaseDatabase.getInstance().getReference("Students");
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
         };
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {  //
 
                 new DatePickerDialog(SignUpActivity.this,
                         date,
@@ -129,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         pd.dismiss();
                                         Toast.makeText(SignUpActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                     }
-                                });
+                                }); //DONE
                     }
                 }
             }
