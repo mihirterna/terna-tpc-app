@@ -7,7 +7,7 @@
 
     <string name="notify">Notifications</string>
     <string name="add_details">Add details</string>
-    <string name="edit_details">Edit details</string>
+
     <string name="check_status">Check Status</string>
 
     <string name="get_name">Enter name</string>
@@ -30,5 +30,19 @@
         <item>Android Development</item>
         <item>Database</item>
         <item>Big data/HADOOP</item>
+    </string-array>
+    <string-array name="year_list">
+        <item>First Year</item>
+        <item>Second Year</item>
+        <item>Third Year</item>
+        <item>Fourth Year</item>
+    </string-array>
+    <string-array name="branch_list">
+        <item>Computer</item>
+        <item>Electronics</item>
+        <item>EXTC</item>
+        <item>IT</item>
+        <item>Mechanical</item>
+        <item>Mechatronics</item>
     </string-array>
 </resources>

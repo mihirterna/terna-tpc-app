@@ -29,10 +29,10 @@
 
     <!--Add Details Button-->
     <Button
-        android:text="@string/edit_details"
+        android:text="Profile"
         style="@style/MainActivityButton"
         android:drawableTop="@drawable/edt"
-        android:id="@+id/edit_Details" />
+        android:id="@+id/profile" />
 
 
 </org.terna.tpc.DashboardLayout>

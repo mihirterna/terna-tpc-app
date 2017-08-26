@@ -2,15 +2,16 @@ package org.terna.tpc;
 
 public class UserInfo {
 
-    public String name,email,id,dob,station,choice;
+    public String name,email,id,dob,year,branch,gen;
 
-    public UserInfo(String name, String email, String id, String dob, String station, String choice) {
+    public UserInfo(String name, String email, String id, String dob,String gen,String year,String branch) {
         this.name = name;
         this.email = email;
         this.id = id;
         this.dob = dob;
-        this.station = station;
-        this.choice = choice;
+        this.gen=gen;
+        this.year = year;
+        this.branch=branch;
     }
 
     public String getName() {
@@ -29,11 +30,10 @@ public class UserInfo {
         return dob;
     }
 
-    public String getStation() {
-        return station;
-    }
+    public String getGen() { return gen;}
 
-    public String getChoice() {
-        return choice;
-    }
+    public String getYear(){ return year;}
+
+    public String getBranch() { return branch;}
+
 }

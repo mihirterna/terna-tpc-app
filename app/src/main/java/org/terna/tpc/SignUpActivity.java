@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +31,13 @@ import java.util.Calendar;
 import java.util.Locale;
 public class SignUpActivity extends AppCompatActivity {
 
-    private TextInputEditText name,email,password,conPassword,ID,station;
+    private TextInputEditText name,email,password,conPassword,ID;
     private EditText dob;
     private DatabaseReference databaseReference;
-    private Spinner choice;
+    private Spinner year,branch;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog pd;
+    private RadioGroup gender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +51,11 @@ public class SignUpActivity extends AppCompatActivity {
         password = (TextInputEditText)findViewById(R.id.input_password);
         conPassword = (TextInputEditText)findViewById(R.id.input_conpassword);
         ID = (TextInputEditText)findViewById(R.id.input_id);
-        station = (TextInputEditText)findViewById(R.id.input_city);
         dob = (EditText)findViewById(R.id.dobText);
-        choice = (Spinner) findViewById(R.id.teamChoice);
+        year=(Spinner)findViewById(R.id.yearChoice);
+        branch=(Spinner)findViewById(R.id.branchChoice);
+        gender= (RadioGroup) findViewById(R.id.rg);
+
         final Button submitButton=(Button) findViewById(R.id.signup_button);
         databaseReference= FirebaseDatabase.getInstance().getReference("Students");
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
@@ -95,12 +100,15 @@ public class SignUpActivity extends AppCompatActivity {
                 String p = password.getText().toString();
                 String cp = conPassword.getText().toString();
                 String i = ID.getText().toString();
-                String s = station.getText().toString();
                 String d = dob.getText().toString();
-                String ch = choice.getSelectedItem().toString();
-                final UserInfo ui = new UserInfo(n,e,i,d,s,ch);
+                int gen = gender.getCheckedRadioButtonId();
+                RadioButton sex = (RadioButton) findViewById(gen);
+                final String gender = sex.getText().toString();
+                final String yr = year.getSelectedItem().toString();
+                final String br = branch.getSelectedItem().toString();
+                final UserInfo ui = new UserInfo(n,e,i,d,gender,yr,br);
                 if(TextUtils.isEmpty(n)||TextUtils.isEmpty(e)||TextUtils.isEmpty(p)||
-                        TextUtils.isEmpty(cp)||TextUtils.isEmpty(i)||TextUtils.isEmpty(s)||TextUtils.isEmpty(d))
+                        TextUtils.isEmpty(cp)||TextUtils.isEmpty(i)||TextUtils.isEmpty(d))
                     Toast.makeText(SignUpActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
                 else{
                     if(!p.equals(cp))
@@ -116,7 +124,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
                                             Toast.makeText(SignUpActivity.this,"Successful sign up! Now Login.",Toast.LENGTH_LONG).show();
-                                            databaseReference.child(user.getUid()).setValue(ui);
+                                            databaseReference.child(yr).child(br).child(user.getUid()).setValue(ui);
                                             startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                             finish();
                                         }else

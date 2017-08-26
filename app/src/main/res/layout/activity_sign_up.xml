@@ -10,6 +10,7 @@
         <include layout="@layout/signup_fragment" />
 </LinearLayout>
 -->
+
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -123,29 +124,52 @@
                     android:inputType="textPassword"
                     android:maxLines="1" />
             </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_city"
+            <RadioGroup
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/input_city"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/rg">
+                <RadioButton
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/get_city"
-                    android:inputType="text"
-                    android:maxLines="1" />
-            </android.support.design.widget.TextInputLayout>
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Male"
+                    android:id="@+id/signup_male"
+                    android:onClick=""
+                    android:checked="true"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Female"
+                    android:id="@+id/singup_female"/>
+            </RadioGroup>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/teamChoice"
-                android:layout_width="fill_parent"
+                <Spinner
+                android:id="@+id/yearChoice"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:drawSelectorOnTop="true"
-                android:entries="@array/spinner_list"
-                android:prompt="@string/spinner_title" />
+                android:entries="@array/year_list"
+                android:prompt="@string/spinner_title"
+                    android:layout_weight="1"/>
+                <Spinner
+                    android:id="@+id/branchChoice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:drawSelectorOnTop="true"
+                    android:entries="@array/branch_list"
+                    android:prompt="@string/spinner_title"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/signup_button"
