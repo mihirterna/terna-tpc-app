@@ -8,7 +8,7 @@
 
     <string name="notify">Notifications</string>
     <string name="add_details">Add details</string>
-    <string name="edit_details">Edit details</string>
+    <string name="check_profile">Check Profile</string>
     <string name="check_status">Check Status</string>
 
     <string name="get_name">Enter name</string>

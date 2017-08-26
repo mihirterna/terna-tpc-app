@@ -27,12 +27,12 @@
         android:drawableTop="@drawable/ad"
         android:id="@+id/add_Details" />
 
-    <!--Add Details Button-->
+    <!--Check Profile Button-->
     <Button
-        android:text="@string/edit_details"
+        android:text="@string/check_profile"
         style="@style/MainActivityButton"
-        android:drawableTop="@drawable/edt"
-        android:id="@+id/edit_Details" />
+        android:drawableTop="@drawable/profile"
+        android:id="@+id/check_profile" />
 
 
 </org.terna.tpc.DashboardLayout>
