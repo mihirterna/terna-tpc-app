@@ -4,6 +4,7 @@
     <string name="college_url">www.terna.org</string>
 
     <string name="logo">College Logo</string>
+    <string name="avatar">Profile Picture</string>
 
     <string name="notify">Notifications</string>
     <string name="add_details">Add details</string>
@@ -24,6 +25,11 @@
     <string name="new_acc"><u>Create new account</u></string>
     <string name="goToLogin"><u>Back to Login</u></string>
     <string name="logout">Logout</string>
+
+    <string name="fe">Enter FE CGPI</string>
+    <string name="se">Enter SE CGPI</string>
+    <string name="te">Enter TE CGPI</string>
+    <string name="extraCurr">Enter extra curricular activities</string>
 
     <string-array name="spinner_list">
         <item>Web Development</item>
