@@ -30,10 +30,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         pd = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
-       /*if(firebaseAuth.getCurrentUser() != null) {
+       if(firebaseAuth.getCurrentUser() != null) {
             startActivity(new Intent(this, StudentDashboardActivity.class));
             finish();
-        }*/
+        }
         final TextView goToSignUp = (TextView)findViewById(R.id.loginNew);
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,11 +68,9 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             pd.dismiss();
-                            if(task.isSuccessful()){
-                                startActivity(new Intent(LoginActivity.this,StudentDashboardActivity.class));
+                            if(task.isSuccessful()) {
+                                startActivity(new Intent(LoginActivity.this, StudentDashboardActivity.class));
                                 finish();
-                            }else{
-                                Toast.makeText(LoginActivity.this,"Some error occurred!",Toast.LENGTH_LONG).show();
                             }
                         }
                     })

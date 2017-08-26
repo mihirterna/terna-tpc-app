@@ -127,8 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             databaseReference.child(yr).child(br).child(user.getUid()).setValue(ui);
                                             startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                             finish();
-                                        }else
-                                            Toast.makeText(SignUpActivity.this,"Some error occurred!",Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 })
                                 .addOnFailureListener(SignUpActivity.this, new OnFailureListener() {
@@ -142,6 +141,11 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,LoginActivity.class));
+        finish();
     }
 }
