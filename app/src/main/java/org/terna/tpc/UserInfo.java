@@ -2,16 +2,13 @@ package org.terna.tpc;
 
 public class UserInfo {
 
-    public String name,email,id,dob,station,choice;
+    public String name,email,id,pswd,dob,station,choice;
 
-    public UserInfo(){
-
-    }
-
-    public UserInfo(String name, String email, String id, String dob, String station, String choice) {
+    public UserInfo(String name, String email, String id, String pswd, String dob, String station, String choice) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.pswd=pswd;
         this.dob = dob;
         this.station = station;
         this.choice = choice;
@@ -27,6 +24,10 @@ public class UserInfo {
 
     public String getId() {
         return id;
+    }
+
+    public String getPswd() {
+        return pswd;
     }
 
     public String getDob() {

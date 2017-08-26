@@ -1,60 +1,36 @@
 package org.terna.tpc;
-
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
 public class SignUpActivity extends AppCompatActivity {
 
     private TextInputEditText name,email,password,conPassword,ID,station;
     private EditText dob;
+    private Button submitButton;
+    private String n,e,p,cp,d,i,s,key,ch;
+    private DatabaseReference mDb;
     private Spinner choice;
-    private ProgressDialog pd;
-    private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        final Button signUp = (Button)findViewById(R.id.signup_button);
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                registerUser();
-            }
-        });
-        pd = new ProgressDialog(this);
-        choice = (Spinner)findViewById(R.id.teamChoice);
-        choice.setPrompt("Choose domain");
         name = (TextInputEditText)findViewById(R.id.input_name);
         email = (TextInputEditText)findViewById(R.id.input_email);
         password = (TextInputEditText)findViewById(R.id.input_password);
@@ -62,6 +38,9 @@ public class SignUpActivity extends AppCompatActivity {
         ID = (TextInputEditText)findViewById(R.id.input_id);
         station = (TextInputEditText)findViewById(R.id.input_city);
         dob = (EditText)findViewById(R.id.dobText);
+        choice = (Spinner) findViewById(R.id.teamChoice);
+        submitButton=(Button) findViewById(R.id.signup_button);
+        mDb= FirebaseDatabase.getInstance().getReference();
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,59 +63,39 @@ public class SignUpActivity extends AppCompatActivity {
         };
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
+
                 new DatePickerDialog(SignUpActivity.this,
                         date,
                         myCalendar.get(Calendar.YEAR),
                         myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH))
                         .show();
+
             }
         });
-    }
 
-    private void registerUser(){
-        String nam = name.getText().toString().trim();
-        String mail = email.getText().toString().trim();
-        String id = ID.getText().toString().trim();
-        String pswd = password.getText().toString().trim();
-        String conpswd = conPassword.getText().toString().trim();
-        String city = station.getText().toString().trim();
-        String dateOfBirth = dob.getText().toString().trim();
-        String ch = choice.getSelectedItem().toString();
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                n=name.getText().toString();
+                e=email.getText().toString();
+                p=password.getText().toString();
+                cp=conPassword.getText().toString();
+                i=ID.getText().toString();
+                s=station.getText().toString();
+                d=dob.getText().toString();
+                ch=choice.getSelectedItem().toString();
+                UserInfo ui = new UserInfo(n,e,i,p,d,s,ch);
+                key=mDb.push().getKey();
+                mDb.child(key).setValue(ui);
+                Intent intent = new Intent(SignUpActivity.this, StudentDashboardActivity.class);
+                startActivity(intent);
 
-        if(TextUtils.isEmpty(nam)||TextUtils.isEmpty(mail)||TextUtils.isEmpty(id)||
-                TextUtils.isEmpty(pswd)||TextUtils.isEmpty(conpswd)||TextUtils.isEmpty(city)||TextUtils.isEmpty(dateOfBirth))
-            Toast.makeText(this,"Please enter proper credentials!",Toast.LENGTH_LONG).show();
-        else {
-            if(!pswd.equals(conpswd))
-                Toast.makeText(this,"Mind the password!",Toast.LENGTH_LONG).show();
-            else {
-                pd.setMessage("Registering...");
-                pd.show();
-                final UserInfo userInfo = new UserInfo(nam, mail, id, dateOfBirth, city, ch);
-                firebaseAuth.createUserWithEmailAndPassword(mail, pswd)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                pd.dismiss();
-                                if (task.isSuccessful()) {
-                                    String key = databaseReference.push().getKey();
-                                    databaseReference.child(key).setValue(userInfo);
-                                    Toast.makeText(getApplicationContext(),"Successful Registration! Now Login.",Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
-                                    finish();
-                                } else {
-                                    Toast.makeText(SignUpActivity.this, "Some error occurred!", Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        }).addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
             }
-        }
+        });
+
+
+
     }
 }
