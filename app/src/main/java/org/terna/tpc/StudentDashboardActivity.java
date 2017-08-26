@@ -28,7 +28,27 @@ public class StudentDashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(StudentDashboardActivity.this,AddStudentDetails.class));
-                finish();
+            }
+        });
+        final Button profilePage = (Button)findViewById(R.id.check_profile);
+        profilePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StudentDashboardActivity.this,ProfileActivity.class));
+            }
+        });
+        final Button notifications = (Button)findViewById(R.id.notification_button);
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implement activity
+            }
+        });
+        final Button checkStatus = (Button)findViewById(R.id.status_check);
+        checkStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implement activity
             }
         });
     }

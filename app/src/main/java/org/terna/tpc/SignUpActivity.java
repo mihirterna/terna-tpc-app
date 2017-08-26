@@ -50,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         ID = (TextInputEditText)findViewById(R.id.input_id);
         station = (TextInputEditText)findViewById(R.id.input_city);
         dob = (EditText)findViewById(R.id.dobText);
-        choice = (Spinner) findViewById(R.id.teamChoice);
+        choice = (Spinner) findViewById(R.id.teamoChoice);
         final Button submitButton=(Button) findViewById(R.id.signup_button);
         databaseReference= FirebaseDatabase.getInstance().getReference("Students");
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
@@ -90,15 +90,14 @@ public class SignUpActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String n = name.getText().toString();
-                String e = email.getText().toString();
+                final String n = name.getText().toString();
+                final String e = email.getText().toString();
                 String p = password.getText().toString();
                 String cp = conPassword.getText().toString();
-                String i = ID.getText().toString();
-                String s = station.getText().toString();
-                String d = dob.getText().toString();
-                String ch = choice.getSelectedItem().toString();
-                final UserInfo ui = new UserInfo(n,e,i,d,s,ch);
+                final String i = ID.getText().toString();
+                final String s = station.getText().toString();
+                final String d = dob.getText().toString();
+                final String ch = choice.getSelectedItem().toString();
                 if(TextUtils.isEmpty(n)||TextUtils.isEmpty(e)||TextUtils.isEmpty(p)||
                         TextUtils.isEmpty(cp)||TextUtils.isEmpty(i)||TextUtils.isEmpty(s)||TextUtils.isEmpty(d))
                     Toast.makeText(SignUpActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
@@ -116,7 +115,8 @@ public class SignUpActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
                                             Toast.makeText(SignUpActivity.this,"Successful sign up! Now Login.",Toast.LENGTH_LONG).show();
-                                            databaseReference.child(user.getUid()).setValue(ui);
+                                            Information information = new Information(n,e,i,d,s,ch);
+                                            databaseReference.child(user.getUid()).setValue(information);
                                             startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                             finish();
                                         }
