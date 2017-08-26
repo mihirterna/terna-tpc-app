@@ -98,7 +98,7 @@ public class SignUpActivity extends AppCompatActivity {
                 String s = station.getText().toString();
                 String d = dob.getText().toString();
                 String ch = choice.getSelectedItem().toString();
-                final UserInfo ui = new UserInfo(n,e,i,p,d,s,ch);
+                final UserInfo ui = new UserInfo(n,e,i,d,s,ch);
                 if(TextUtils.isEmpty(n)||TextUtils.isEmpty(e)||TextUtils.isEmpty(p)||
                         TextUtils.isEmpty(cp)||TextUtils.isEmpty(i)||TextUtils.isEmpty(s)||TextUtils.isEmpty(d))
                     Toast.makeText(SignUpActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
@@ -129,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         pd.dismiss();
                                         Toast.makeText(SignUpActivity.this,e.getMessage(),Toast.LENGTH_LONG).show();
                                     }
-                                }); //DONE
+                                });
                     }
                 }
             }
