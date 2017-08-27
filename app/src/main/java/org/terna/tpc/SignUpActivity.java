@@ -34,7 +34,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private TextInputEditText name,email,password,conPassword,ID;
     private EditText dob;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databasePath;
     private Spinner year,branch;
     private FirebaseAuth firebaseAuth;
     private ProgressDialog pd;
@@ -59,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         final Button submitButton=(Button) findViewById(R.id.signup_button);
         databaseReference= FirebaseDatabase.getInstance().getReference("Students");
+        databasePath= FirebaseDatabase.getInstance().getReference("Path");
         final TextView backToLogin = (TextView)findViewById(R.id.backToLogin);
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,18 +97,18 @@ public class SignUpActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String n = name.getText().toString();
-                String e = email.getText().toString();
+                final String n = name.getText().toString();
+                final String e = email.getText().toString();
                 String p = password.getText().toString();
                 String cp = conPassword.getText().toString();
-                String i = ID.getText().toString();
-                String d = dob.getText().toString();
+                final String i = ID.getText().toString();
+                final String d = dob.getText().toString();
                 int gen = gender.getCheckedRadioButtonId();
                 RadioButton sex = (RadioButton) findViewById(gen);
                 final String gender = sex.getText().toString();
                 final String yr = year.getSelectedItem().toString();
                 final String br = branch.getSelectedItem().toString();
-                final UserInfo ui = new UserInfo(n,e,i,d,gender,yr,br);
+
                 if(TextUtils.isEmpty(n)||TextUtils.isEmpty(e)||TextUtils.isEmpty(p)||
                         TextUtils.isEmpty(cp)||TextUtils.isEmpty(i)||TextUtils.isEmpty(d))
                     Toast.makeText(SignUpActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
@@ -125,7 +126,9 @@ public class SignUpActivity extends AppCompatActivity {
                                         if(task.isSuccessful()){
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
                                             Toast.makeText(SignUpActivity.this,"Successful sign up! Now Login.",Toast.LENGTH_LONG).show();
-                                            databaseReference.child(yr).child(br).child(user.getUid()).setValue(ui);
+                                            UserInfo ui = new UserInfo(n,e,i,d,gender,yr,br);
+                                            databaseReference.child(user.getUid()).setValue(ui);
+                                            databasePath.child(yr).child(br).setValue(user.getUid());
                                             startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                             finish();
                                         }

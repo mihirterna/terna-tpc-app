@@ -40,12 +40,12 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 try {
-                    Information receivedInfo = dataSnapshot.getValue(Information.class);
+                    UserInfo receivedInfo = (UserInfo) dataSnapshot.getValue();
                     HashMap<String,String> receivedAcademics = (HashMap<String,String>)dataSnapshot.child("Academics & Extras").getValue();
                     profileNameView.setText(receivedInfo.getName());
                     profileEmailView.setText(receivedInfo.getEmail());
                     profileDobView.setText(receivedInfo.getDob());
-                    profileStationView.setText(receivedInfo.getCity());
+                    profileStationView.setText(receivedInfo.getGender());
                     profileMarksView.setText("FE: "+receivedAcademics.get("FE")+"\nSE: "+receivedAcademics.get("SE")+"\nTE: "+receivedAcademics.get("TE"));
                     profileExtrasView.setText(receivedAcademics.get("EXTRAS"));
                 }catch(Exception r){

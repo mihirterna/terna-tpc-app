@@ -135,15 +135,14 @@
                     android:layout_weight="1"
                     android:text="Male"
                     android:id="@+id/signup_male"
-                    android:onClick=""
-                    android:checked="true"/>
+                    android:checked="false"/>
                 <RadioButton
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Female"
-                    android:onClick=""
-                    android:id="@+id/singup_female"/>
+                    android:id="@+id/signup_female"
+                    />
             </RadioGroup>
             <LinearLayout
                 android:layout_width="match_parent"

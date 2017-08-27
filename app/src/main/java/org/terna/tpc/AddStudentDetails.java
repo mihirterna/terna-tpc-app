@@ -48,7 +48,7 @@ public class AddStudentDetails extends AppCompatActivity {
         setContentView(R.layout.add_student_details);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        storageReference = FirebaseStorage.getInstance().getReference("Student Profile Pics");
+        storageReference = FirebaseStorage.getInstance().getReference("Students");
         databaseReference = FirebaseDatabase.getInstance().getReference("Students");
 
         pd = new ProgressDialog(this);
@@ -91,8 +91,7 @@ public class AddStudentDetails extends AppCompatActivity {
                 AddStudentDetails.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        StorageReference profilePic = storageReference.child(user.getUid());
-                        profilePic.putFile(filePath)
+                        storageReference.child(user.getUid()).putFile(filePath)
                                 .addOnSuccessListener(AddStudentDetails.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -127,7 +126,7 @@ public class AddStudentDetails extends AppCompatActivity {
                         marks.put("TE", TEM);
                         if (TextUtils.isEmpty(EXT)) marks.put("EXTRAS", "nothing");
                         else marks.put("EXTRAS", EXT);
-                        databaseReference.child(user.getUid()).child("Academics & Extras").setValue(marks)
+                        databaseReference.child(user.getUid()).child("Academics").setValue(marks)
                                 .addOnCompleteListener(AddStudentDetails.this, new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

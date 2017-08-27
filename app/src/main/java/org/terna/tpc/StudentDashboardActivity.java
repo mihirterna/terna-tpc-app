@@ -30,7 +30,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(StudentDashboardActivity.this,AddStudentDetails.class));
             }
         });
-        final Button profilePage = (Button)findViewById(R.id.check_profile);
+        final Button profilePage = (Button)findViewById(R.id.profile);
         profilePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
