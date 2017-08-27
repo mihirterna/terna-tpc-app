@@ -9,12 +9,10 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class StudentDashboardActivity extends AppCompatActivity implements View.OnClickListener {
+public class StudentDashboardActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private Button profile,add,check,notif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,32 +23,34 @@ public class StudentDashboardActivity extends AppCompatActivity implements View.
             startActivity(new Intent(StudentDashboardActivity.this,LoginActivity.class));
             finish();
         }
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        profile=(Button) findViewById(R.id.profile);
-        add=(Button) findViewById(R.id.add_Details);
-        check=(Button) findViewById(R.id.status_check);
-        notif=(Button) findViewById(R.id.notification_button);
-        profile.setOnClickListener(this);
-        add.setOnClickListener(this);
-        check.setOnClickListener(this);
-        notif.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId())
-        {
-            case R.id.profile:
-                break;
-            case R.id.add_Details:
-                break;
-            case R.id.status_check:
-                break;
-            case R.id.notification_button:
-                break;
-
-
-        }
+        final Button addDetails = (Button)findViewById(R.id.add_Details);
+        addDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StudentDashboardActivity.this,AddStudentDetails.class));
+            }
+        });
+        final Button profilePage = (Button)findViewById(R.id.check_profile);
+        profilePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StudentDashboardActivity.this,ProfileActivity.class));
+            }
+        });
+        final Button notifications = (Button)findViewById(R.id.notification_button);
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implement activity
+            }
+        });
+        final Button checkStatus = (Button)findViewById(R.id.status_check);
+        checkStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: implement activity
+            }
+        });
     }
 
     @Override

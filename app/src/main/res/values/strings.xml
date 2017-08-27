@@ -26,6 +26,7 @@
     <string name="logout">Logout</string>
 
     <string-array name="spinner_list">
+        <item>(Choose your interest)</item>
         <item>Web Development</item>
         <item>Android Development</item>
         <item>Database</item>
