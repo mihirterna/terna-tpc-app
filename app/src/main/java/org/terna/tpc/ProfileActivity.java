@@ -1,11 +1,16 @@
 package org.terna.tpc;
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -13,50 +18,91 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProfileActivity extends AppCompatActivity {
+    public StorageReference mStorage;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        mStorage = FirebaseStorage.getInstance().getReference("Students");
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Students").child(user.getUid());
+        final StorageReference mPath = mStorage.child(user.getUid());
 
-        final ImageView profileImageView = (ImageView)findViewById(R.id.user_profile_photo);
-        final TextView profileNameView = (TextView)findViewById(R.id.user_profile_name);
-        final TextView profileEmailView = (TextView)findViewById(R.id.user_profile_email);
-        final TextView profileDobView = (TextView)findViewById(R.id.user_profile_dob);
-        final TextView profileStationView = (TextView)findViewById(R.id.user_profile_city);
-        final TextView profileMarksView = (TextView)findViewById(R.id.user_profile_marks);
-        final TextView profileExtrasView = (TextView)findViewById(R.id.user_profile_extras);
+        final ImageView profileImageView = (ImageView) findViewById(R.id.user_profile_photo);
+        final TextView profileNameView = (TextView) findViewById(R.id.user_profile_name);
+        final TextView profileEmailView = (TextView) findViewById(R.id.user_profile_email);
+        final TextView profileDobView = (TextView) findViewById(R.id.user_profile_dob);
+        final TextView profileStationView = (TextView) findViewById(R.id.user_profile_city);
+        final TextView profileMarksView = (TextView) findViewById(R.id.user_profile_marks);
+        final TextView profileExtrasView = (TextView) findViewById(R.id.user_profile_extras);
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        ProfileActivity.this.runOnUiThread(new Runnable() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                try {
-                    UserInfo receivedInfo = (UserInfo) dataSnapshot.getValue();
-                    HashMap<String,String> receivedAcademics = (HashMap<String,String>)dataSnapshot.child("Academics & Extras").getValue();
-                    profileNameView.setText(receivedInfo.getName());
-                    profileEmailView.setText(receivedInfo.getEmail());
-                    profileDobView.setText(receivedInfo.getDob());
-                    profileStationView.setText(receivedInfo.getGender());
-                    profileMarksView.setText("FE: "+receivedAcademics.get("FE")+"\nSE: "+receivedAcademics.get("SE")+"\nTE: "+receivedAcademics.get("TE"));
-                    profileExtrasView.setText(receivedAcademics.get("EXTRAS"));
-                }catch(Exception r){
-                    r.printStackTrace();
-                }
-            }
+            public void run() {
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        try {
+                            UserInfo receivedInfo = dataSnapshot.getValue(UserInfo.class);
+                            HashMap<String, String> receivedAcademics = (HashMap<String, String>) dataSnapshot.child("Academics").getValue();
+                            profileNameView.setText(receivedInfo.getName());
+                            profileEmailView.setText(receivedInfo.getEmail());
+                            profileDobView.setText(receivedInfo.getDob());
+                            profileStationView.setText(receivedInfo.getGender());
+                            profileMarksView.setText("FE: " + receivedAcademics.get("FE") + "\nSE: " + receivedAcademics.get("SE") + "\nTE: " + receivedAcademics.get("TE"));
+                            profileExtrasView.setText(receivedAcademics.get("EXTRAS"));
+                        } catch (Exception r) {
+                            r.printStackTrace();
+                        }
+                    }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),databaseError.getMessage(),Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w("mihir", "loadPost:onCancelled", databaseError.toException());
+                        Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
+
+        ProfileActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final File localFile = File.createTempFile("image","jpg");
+                    mPath.getFile(localFile)
+                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    profileImageView.setImageURI(Uri.fromFile(localFile));
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("mihir",e.getMessage());
+                                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+
+                                }
+                            });
+                } catch (Exception e) {
+                    Log.e("mihir",e.getMessage());
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
     }
 }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,7 +40,8 @@ public class AddStudentDetails extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
-    private Uri filePath;
+    private Spinner ch;
+    private Uri uri;
     private static final int PROFILE_IMAGE_REQUEST = 1234;
 
     @Override
@@ -63,6 +65,7 @@ public class AddStudentDetails extends AppCompatActivity {
         se = (EditText)findViewById(R.id.seMarks);
         te = (EditText)findViewById(R.id.teMarks);
         extra = (EditText)findViewById(R.id.extras);
+        ch=(Spinner) findViewById(R.id.teamChoice);
 
         final Button addToFirebase = (Button)findViewById(R.id.add_Details);
         addToFirebase.setOnClickListener(new View.OnClickListener() {
@@ -75,12 +78,13 @@ public class AddStudentDetails extends AppCompatActivity {
 
     @SuppressWarnings("VisibleForTests")
     private void uploadData() {
-        if (filePath == null)
+        if (uri == null)
             Toast.makeText(getApplicationContext(), "Select Profile Image", Toast.LENGTH_LONG).show();
         else{
             final String FEM = fe.getText().toString().trim();
             final String SEM = se.getText().toString().trim();
             final String TEM = te.getText().toString().trim();
+            final String choice = ch.getSelectedItem().toString();
             final String EXT = extra.getText().toString().trim();
             if (TextUtils.isEmpty(FEM) || TextUtils.isEmpty(SEM) || TextUtils.isEmpty(TEM))
                 Toast.makeText(getApplicationContext(), "Enter proper credentials", Toast.LENGTH_LONG).show();
@@ -91,7 +95,7 @@ public class AddStudentDetails extends AppCompatActivity {
                 AddStudentDetails.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        storageReference.child(user.getUid()).putFile(filePath)
+                        storageReference.child(user.getUid()).putFile(uri)
                                 .addOnSuccessListener(AddStudentDetails.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -124,6 +128,7 @@ public class AddStudentDetails extends AppCompatActivity {
                         marks.put("FE", FEM);
                         marks.put("SE", SEM);
                         marks.put("TE", TEM);
+                        marks.put("Interest in",choice);
                         if (TextUtils.isEmpty(EXT)) marks.put("EXTRAS", "nothing");
                         else marks.put("EXTRAS", EXT);
                         databaseReference.child(user.getUid()).child("Academics").setValue(marks)
@@ -155,10 +160,11 @@ public class AddStudentDetails extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == PROFILE_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
-            filePath = data.getData();
+            uri = data.getData();
             try {
-                Bitmap imageProfile = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                Bitmap imageProfile = MediaStore.Images.Media.getBitmap(getContentResolver(),uri);
                 profilePicture.setImageBitmap(imageProfile);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

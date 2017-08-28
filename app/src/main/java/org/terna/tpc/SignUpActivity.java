@@ -128,7 +128,7 @@ public class SignUpActivity extends AppCompatActivity {
                                             Toast.makeText(SignUpActivity.this,"Successful sign up! Now Login.",Toast.LENGTH_LONG).show();
                                             UserInfo ui = new UserInfo(n,e,i,d,gender,yr,br);
                                             databaseReference.child(user.getUid()).setValue(ui);
-                                            databasePath.child(yr).child(br).setValue(user.getUid());
+                                            databasePath.child(yr).child(br).child(user.getUid()).setValue(n);
                                             startActivity(new Intent(SignUpActivity.this,LoginActivity.class));
                                             finish();
                                         }
