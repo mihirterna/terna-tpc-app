@@ -21,13 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.File;
 import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
     public StorageReference mStorage;
-    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +84,6 @@ public class ProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                                     profileImageView.setImageURI(Uri.fromFile(localFile));
-
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

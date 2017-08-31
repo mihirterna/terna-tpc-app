@@ -1,35 +1,36 @@
-//SingUp
+
 package org.terna.tpc;
-import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+        import android.app.DatePickerDialog;
+        import android.app.ProgressDialog;
+        import android.content.Intent;
+        import android.support.annotation.NonNull;
+        import android.support.design.widget.TextInputEditText;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.text.TextUtils;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.DatePicker;
+        import android.widget.EditText;
+        import android.widget.RadioButton;
+        import android.widget.RadioGroup;
+        import android.widget.Spinner;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+        import com.google.android.gms.tasks.OnCompleteListener;
+        import com.google.android.gms.tasks.OnFailureListener;
+        import com.google.android.gms.tasks.Task;
+        import com.google.firebase.auth.AuthResult;
+        import com.google.firebase.auth.FirebaseAuth;
+        import com.google.firebase.auth.FirebaseUser;
+        import com.google.firebase.database.DatabaseReference;
+        import com.google.firebase.database.FirebaseDatabase;
+
+        import java.text.SimpleDateFormat;
+        import java.util.Calendar;
+        import java.util.Locale;
 public class SignUpActivity extends AppCompatActivity {
 
     private TextInputEditText name,email,password,conPassword,ID;
@@ -82,7 +83,7 @@ public class SignUpActivity extends AppCompatActivity {
         };
         dob.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  //
+            public void onClick(View view) {
 
                 new DatePickerDialog(SignUpActivity.this,
                         date,
@@ -125,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         pd.dismiss();
                                         if(task.isSuccessful()){
                                             FirebaseUser user = firebaseAuth.getCurrentUser();
-                                            Toast.makeText(SignUpActivity.this,"Successful sign up! Now Login.",Toast.LENGTH_LONG).show();
+                                            Toast.makeText(SignUpActivity.this,"Welcome!",Toast.LENGTH_LONG).show();
                                             UserInfo ui = new UserInfo(n,e,i,d,gender,yr,br);
                                             databaseReference.child(user.getUid()).setValue(ui);
                                             databasePath.child(yr).child(br).child(user.getUid()).setValue(n);

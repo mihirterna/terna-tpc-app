@@ -75,7 +75,6 @@ public class AddStudentDetails extends AppCompatActivity {
             }
         });
     }
-
     @SuppressWarnings("VisibleForTests")
     private void uploadData() {
         if (uri == null)

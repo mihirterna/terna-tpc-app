@@ -1,7 +1,8 @@
 package org.terna.tpc;
 
 public class UserInfo {
-    String name,email,id,dob,gender,yr,br;
+    public String name,email,id,dob,gender,yr,br;
+
     public UserInfo () {
     }
 
@@ -20,8 +21,7 @@ public class UserInfo {
         return name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail() { return email;
     }
 
     public String getId() { return id; }

@@ -41,7 +41,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: implement activity
+                startActivity(new Intent(StudentDashboardActivity.this,Student_notification.class));
             }
         });
         final Button checkStatus = (Button)findViewById(R.id.status_check);

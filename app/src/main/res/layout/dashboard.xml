@@ -31,8 +31,8 @@
     <Button
         android:text="Profile"
         style="@style/MainActivityButton"
-        android:drawableTop="@drawable/ad"
-        android:id="@+id/profile" />
+        android:drawableTop="@drawable/profile1"
+        android:id="@+id/profile"/>
 
 
 </org.terna.tpc.DashboardLayout>
