@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,22 +19,22 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
 import java.io.File;
 import java.util.HashMap;
 
-public class ProfileActivity extends AppCompatActivity {
-    private StorageReference mStorage;
+public class ListViewOnclick extends AppCompatActivity {
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        uid=getIntent().getStringExtra("uid");
+        StorageReference mStorage;
         mStorage = FirebaseStorage.getInstance().getReference("Students");
-        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Students").child(user.getUid());
-        final StorageReference mPath = mStorage.child(user.getUid());
-
+        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Students").child(uid);
+        final StorageReference mPath = mStorage.child(uid);
         final ImageView profileImageView = (ImageView) findViewById(R.id.user_profile_photo);
         final TextView profileNameView = (TextView) findViewById(R.id.user_profile_name);
         final TextView profileEmailView = (TextView) findViewById(R.id.user_profile_email);
@@ -45,7 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
         final TextView profileMarksView = (TextView) findViewById(R.id.user_profile_marks);
         final TextView profileExtrasView = (TextView) findViewById(R.id.user_profile_extras);
 
-        ProfileActivity.this.runOnUiThread(new Runnable() {
+        ListViewOnclick.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 databaseReference.addValueEventListener(new ValueEventListener() {
@@ -74,7 +72,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        ProfileActivity.this.runOnUiThread(new Runnable() {
+        ListViewOnclick.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -100,6 +98,9 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+
 
     }
 }

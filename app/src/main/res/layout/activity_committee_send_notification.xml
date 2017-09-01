@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.terna.tpc.CommitteeSendNotification">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send Notifications"
+        style="@style/MainActivityButton"
+        android:paddingTop="10dp"
+        android:textSize="20dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <Spinner
+            android:id="@+id/yearChoice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/year_list"
+            android:prompt="@string/spinner_title"
+            android:layout_weight="1"/>
+        <Spinner
+            android:id="@+id/branchChoice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/branch_list"
+            android:prompt="@string/spinner_title"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/TextAppearance.Design.Snackbar.Message"
+            android:layout_width="200sp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:text="Select File:"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:text="..."
+            android:id="@+id/pdfAddButton"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:id="@+id/pdfFileName"
+        android:textSize="18sp"/>
+
+</LinearLayout>

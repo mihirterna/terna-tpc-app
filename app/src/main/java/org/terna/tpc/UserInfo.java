@@ -7,6 +7,7 @@ public class UserInfo {
     }
 
 
+
     public UserInfo(String name, String email, String id, String dob, String gender, String yr, String br) {
         this.name = name;
         this.email = email;

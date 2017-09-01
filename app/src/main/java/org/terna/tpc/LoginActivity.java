@@ -23,6 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText loginID,loginPassword;
     private ProgressDialog pd;
     private FirebaseAuth firebaseAuth;
+    private String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vaidateUser();
                 loginUser();
             }
         });
@@ -54,14 +56,19 @@ public class LoginActivity extends AppCompatActivity {
         loginPassword = (TextInputEditText)findViewById(R.id.loginPassword);
     }
 
-    private void loginUser(){
-        String email = loginID.getText().toString().trim();
-        String password = loginPassword.getText().toString().trim();
+    private void vaidateUser() {
+        email = loginID.getText().toString().trim();
+        password = loginPassword.getText().toString().trim();
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(LoginActivity.this,"Enter proper credentials!",Toast.LENGTH_LONG).show();
         }
-        else if (String.valueOf(email)=="mihir@gmail.com"&&String.valueOf(password)=="123456")
+    }
+
+    private void loginUser(){
+
+        if (email=="mihir@gmail.com" && password=="123456")
         {
+
             firebaseAuth.signInWithEmailAndPassword(email,password);
             startActivity(new Intent(LoginActivity.this,CommitteeActivity.class));
         }
@@ -75,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             pd.dismiss();
                             if(task.isSuccessful()) {
-                                startActivity(new Intent(LoginActivity.this, StudentDashboardActivity.class));
+                                startActivity(new Intent(LoginActivity.this, CommitteeActivity.class));
                                 finish();
                             }
                         }

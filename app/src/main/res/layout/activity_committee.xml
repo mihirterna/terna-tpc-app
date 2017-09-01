@@ -9,7 +9,7 @@
     <include layout="@layout/actionbar_layout"></include>
 
     <Button
-        android:drawableTop="@drawable/noti"
+        android:drawableTop="@drawable/ic_list_black_24dp"
         android:text="Student List"
         style="@style/MainActivityButton"
         android:id="@+id/listStudents"
@@ -29,23 +29,27 @@
         />
 
     <Button
-        android:text="@string/add_details"
+        android:text="Send Notifications"
         style="@style/MainActivityButton"
-        android:drawableTop="@drawable/ad"
-        android:id="@+id/viewStudents"
-        android:layout_below="@id/listStudents"
+        android:drawableTop="@drawable/ic_archive_black_50dp"
+        android:id="@+id/notif"
         android:layout_marginTop="100dp"
-        android:layout_marginLeft="65dp"/>
-
-
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/listStudents"
+        />
     <Button
         android:text="Profile"
         style="@style/MainActivityButton"
         android:drawableTop="@drawable/profile1"
         android:id="@+id/committeeProfile"
-        android:layout_alignBottom="@+id/viewStudents"
+        android:layout_alignBottom="@+id/notif"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="65dp" />
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+            <include layout="@layout/footer_layout"></include>
+    </LinearLayout>
 </RelativeLayout>
 
