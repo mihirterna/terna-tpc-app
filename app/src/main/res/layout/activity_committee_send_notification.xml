@@ -57,12 +57,13 @@
             android:text="..."
             android:id="@+id/pdfAddButton"/>
     </LinearLayout>
-    <TextView
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:id="@+id/pdfFileName"
-        android:textSize="18sp"/>
+        android:id="@+id/pdfList">
+
+    </ListView>
 
 </LinearLayout>

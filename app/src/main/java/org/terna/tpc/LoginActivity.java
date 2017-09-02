@@ -23,12 +23,15 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText loginID,loginPassword;
     private ProgressDialog pd;
     private FirebaseAuth firebaseAuth;
+    final String abc="mihir@gmail.com";
+    final String xyz = "123456";
     private String email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         pd = new ProgressDialog(this);
         firebaseAuth = FirebaseAuth.getInstance();
        if(firebaseAuth.getCurrentUser() != null) {
@@ -66,9 +69,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser(){
 
-        if (email=="mihir@gmail.com" && password=="123456")
+        if (email.equalsIgnoreCase(abc)&&password.equalsIgnoreCase(xyz))
         {
-
             firebaseAuth.signInWithEmailAndPassword(email,password);
             startActivity(new Intent(LoginActivity.this,CommitteeActivity.class));
         }
@@ -82,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             pd.dismiss();
                             if(task.isSuccessful()) {
-                                startActivity(new Intent(LoginActivity.this, CommitteeActivity.class));
+                                startActivity(new Intent(LoginActivity.this, StudentDashboardActivity.class));
                                 finish();
                             }
                         }

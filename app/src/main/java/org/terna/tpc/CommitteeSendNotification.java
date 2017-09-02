@@ -2,33 +2,42 @@ package org.terna.tpc;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.IOException;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommitteeSendNotification extends AppCompatActivity {
     private String year,branch;
 
     private ProgressDialog pd;
     private StorageReference storagePath;
+    private DatabaseReference data1,data2,dataPath;
     private Uri uri;
+    private List<String> list= new ArrayList<>();
+    private String name,extension,path,mKey;
+    private ListView pdfList;
+    private ArrayAdapter<String> arrayAdapter;
     private static final int File_Request_code = 1234;
 
     @Override
@@ -36,10 +45,12 @@ public class CommitteeSendNotification extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_committee_send_notification);
         final Spinner yr = (Spinner) findViewById(R.id.yearChoice);
+        pd = new ProgressDialog(this);
         final Spinner br = (Spinner) findViewById(R.id.branchChoice);
         final Button submit = (Button) findViewById(R.id.pdfAddButton);
-        final TextView pdfName = (TextView) findViewById(R.id.pdfFileName);
+        pdfList=(ListView)findViewById(R.id.pdfList);
         final StorageReference mStorage = FirebaseStorage.getInstance().getReference("Notifications");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Notifications");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +58,7 @@ public class CommitteeSendNotification extends AppCompatActivity {
                 year=yr.getSelectedItem().toString();
                 branch=br.getSelectedItem().toString();
                 storagePath=mStorage.child(year).child(branch);
+                dataPath=mDatabase.child(year).child(branch);
                 showImageChooser();
             }
         });
@@ -64,33 +76,32 @@ public class CommitteeSendNotification extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == File_Request_code && resultCode == RESULT_OK && data != null && data.getData() != null){
             uri = data.getData();
-
-                TextView pdfFile = (TextView) findViewById(R.id.pdfFileName);
-
-                 uploadData();
-
-
-
+            File file= new File(uri.getPath());
+            name = file.getName();
+            path=String.valueOf(uri.getPath());
+            extension=path.substring(path.lastIndexOf(".") + 1);
+            mKey=dataPath.push().getKey();
+            dataPath.child(mKey).setValue(extension);
+            uploadData();
         }
     }
 
     @SuppressWarnings("VisibleForTests")
     private void uploadData() {
-
         CommitteeSendNotification.this.runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
-                pd.setTitle("Doing work...");
+                try {
                 pd.show();
-                storagePath.putFile(uri)
+                storagePath.child(mKey).child(name).putFile(uri)
                         .addOnSuccessListener(CommitteeSendNotification.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 pd.dismiss();
-                                Toast.makeText(getApplicationContext(), "Success!", Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(CommitteeSendNotification.this, StudentDashboardActivity.class));
-                                finish();
+                                list.add(year+" "+branch+" "+name);
+                                arrayAdapter = new ArrayAdapter(CommitteeSendNotification.this, R.layout.liststudentclass,R.id.tv1,list);
+                                pdfList.setAdapter(arrayAdapter);
+                                Toast.makeText(CommitteeSendNotification.this,name+" is sent",Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(CommitteeSendNotification.this, new OnFailureListener() {
@@ -107,7 +118,14 @@ public class CommitteeSendNotification extends AppCompatActivity {
                                 pd.show();
                             }
                         });
+
+                } catch (Exception e) {
+                    Log.e("mihir",e.getMessage());
+                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                }
             }
         });
-    }
+            }
+
+
 }
