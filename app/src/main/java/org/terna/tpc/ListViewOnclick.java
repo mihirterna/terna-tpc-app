@@ -52,10 +52,10 @@ public class ListViewOnclick extends AppCompatActivity {
                         try {
                             HashMap<String,String> receivedInfo1 = (HashMap<String,String>) dataSnapshot.getValue();
                             HashMap<String, String> receivedAcademics = (HashMap<String, String>) dataSnapshot.child("Academics").getValue();
-                            profileNameView.setText("Name: " + receivedInfo1.get("name"));
-                            profileEmailView.setText("E-Mail: " + receivedInfo1.get("email"));
-                            profileDobView.setText("DateOfBirth: " + receivedInfo1.get("dob"));
-                            profileStationView.setText("Gender: " + receivedInfo1.get("gender"));
+                            profileNameView.setText("Name: " + receivedInfo1.get("a"));
+                            profileEmailView.setText("E-Mail: " + receivedInfo1.get("b"));
+                            profileDobView.setText("DateOfBirth: " + receivedInfo1.get("d"));
+                            profileStationView.setText("Gender: " + receivedInfo1.get("e"));
                             profileMarksView.setText("FE: " + receivedAcademics.get("FE") + "\nSE: " + receivedAcademics.get("SE") + "\nTE: " + receivedAcademics.get("TE"));
                             profileExtrasView.setText(receivedAcademics.get("EXTRAS"));
                         } catch (Exception r) {

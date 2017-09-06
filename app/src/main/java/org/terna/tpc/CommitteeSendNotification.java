@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,24 +23,22 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CommitteeSendNotification extends AppCompatActivity {
-    private String year,branch;
+    private String year,branch,title;
 
     private ProgressDialog pd;
     private StorageReference storagePath;
-    private DatabaseReference data1,data2,dataPath;
+    private DatabaseReference dataPath;
     private Uri uri;
     private List<String> list= new ArrayList<>();
-    private String name,extension,path,mKey;
+    private String extension,path;
     private ListView pdfList;
     private ArrayAdapter<String> arrayAdapter;
     private static final int File_Request_code = 1234;
-
+    private EditText noticeTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,12 +48,14 @@ public class CommitteeSendNotification extends AppCompatActivity {
         final Spinner br = (Spinner) findViewById(R.id.branchChoice);
         final Button submit = (Button) findViewById(R.id.pdfAddButton);
         pdfList=(ListView)findViewById(R.id.pdfList);
+        noticeTitle= (EditText) findViewById(R.id.noticeTitle);
         final StorageReference mStorage = FirebaseStorage.getInstance().getReference("Notifications");
         final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Notifications");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                title=noticeTitle.getText().toString().trim();
                 year=yr.getSelectedItem().toString();
                 branch=br.getSelectedItem().toString();
                 storagePath=mStorage.child(year).child(branch);
@@ -76,12 +77,9 @@ public class CommitteeSendNotification extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == File_Request_code && resultCode == RESULT_OK && data != null && data.getData() != null){
             uri = data.getData();
-            File file= new File(uri.getPath());
-            name = file.getName();
             path=String.valueOf(uri.getPath());
             extension=path.substring(path.lastIndexOf(".") + 1);
-            mKey=dataPath.push().getKey();
-            dataPath.child(mKey).setValue(extension);
+            dataPath.child(title).setValue(extension);
             uploadData();
         }
     }
@@ -93,15 +91,15 @@ public class CommitteeSendNotification extends AppCompatActivity {
             public void run() {
                 try {
                 pd.show();
-                storagePath.child(mKey).child(name).putFile(uri)
+                storagePath.child(title).putFile(uri)
                         .addOnSuccessListener(CommitteeSendNotification.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 pd.dismiss();
-                                list.add(year+" "+branch+" "+name);
+                                list.add(year+" "+branch+" "+title);
                                 arrayAdapter = new ArrayAdapter(CommitteeSendNotification.this, R.layout.liststudentclass,R.id.tv1,list);
                                 pdfList.setAdapter(arrayAdapter);
-                                Toast.makeText(CommitteeSendNotification.this,name+" is sent",Toast.LENGTH_LONG).show();
+                                Toast.makeText(CommitteeSendNotification.this,title+" is sent",Toast.LENGTH_LONG).show();
                             }
                         })
                         .addOnFailureListener(CommitteeSendNotification.this, new OnFailureListener() {

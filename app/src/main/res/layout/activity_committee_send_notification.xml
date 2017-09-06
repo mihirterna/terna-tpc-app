@@ -37,7 +37,14 @@
             android:prompt="@string/spinner_title"
             android:layout_weight="1"/>
     </LinearLayout>
-
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:hint="Write Notice Title without . / @ # etc."
+        android:id="@+id/noticeTitle"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -52,10 +59,10 @@
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/pdfAddButton"
             android:layout_width="40sp"
             android:layout_height="40sp"
-            android:text="..."
-            android:id="@+id/pdfAddButton"/>
+            android:text="..." />
     </LinearLayout>
     <ListView
         android:layout_width="match_parent"
