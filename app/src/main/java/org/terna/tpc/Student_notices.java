@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Student_notification extends AppCompatActivity {
+public class Student_notices extends AppCompatActivity {
     private StorageReference storageReference,storagePath,sp1,sp2;
     private DatabaseReference databaseReference,dataPath,data1,data2;
     private List<String> snList = new ArrayList<>();
@@ -53,8 +53,8 @@ public class Student_notification extends AppCompatActivity {
         final String epx="jpg",pdf="pdf";
 
         user = firebaseAuth.getCurrentUser();
-        data1=FirebaseDatabase.getInstance().getReference("Notifications");
-        storageReference= FirebaseStorage.getInstance().getReference("Notifications");
+        data1=FirebaseDatabase.getInstance().getReference("Notices");
+        storageReference= FirebaseStorage.getInstance().getReference("Notices");
         databaseReference= FirebaseDatabase.getInstance().getReference("Students");
         notifList= (ListView) findViewById(R.id.student_notif_list);
         dataPath=databaseReference.child(user.getUid());
@@ -65,7 +65,7 @@ public class Student_notification extends AppCompatActivity {
                     HashMap<String, String> receivedInfo1 = (HashMap<String, String>) dataSnapshot.getValue();
                     yr = receivedInfo1.get("f");
                     br = receivedInfo1.get("g");
-                    Toast.makeText(Student_notification.this, yr + br, Toast.LENGTH_LONG).show();
+                    Toast.makeText(Student_notices.this, yr + br, Toast.LENGTH_LONG).show();
                     data2=data1.child(yr).child(br);
                     storagePath=storageReference.child(yr).child(br);
                 } catch (Exception r) {
@@ -95,7 +95,7 @@ public class Student_notification extends AppCompatActivity {
                             a1=sp1.getName();
                             header.add(sp1.getName());
                             exten.add(extension);
-                            arrayAdapter = new ArrayAdapter<>(Student_notification.this, R.layout.liststudentclass, R.id.tv1, header);
+                            arrayAdapter = new ArrayAdapter<>(Student_notices.this, R.layout.liststudentclass, R.id.tv1, header);
                             notifList.setAdapter(arrayAdapter);
                         }
                     }
@@ -119,7 +119,7 @@ public class Student_notification extends AppCompatActivity {
                     downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                     if(extension.equalsIgnoreCase(epx))
                     {
-                        Toast.makeText(Student_notification.this,storageReference.child(header.get(position)+".jpeg").getDownloadUrl().toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(Student_notices.this,storageReference.child(header.get(position)+".jpeg").getDownloadUrl().toString(),Toast.LENGTH_LONG).show();
 
                                 /*Uri uri = Uri.fromFile(file);
                                 DownloadManager.Request request = new DownloadManager.Request(uri);

@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -38,7 +39,7 @@ public class AddStudentDetails extends AppCompatActivity {
     private EditText fe,se,te,extra;
     private ProgressDialog pd;
     private FirebaseAuth firebaseAuth;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,tokenReference;
     private StorageReference storageReference;
     private Spinner ch;
     private Uri uri;
@@ -52,6 +53,7 @@ public class AddStudentDetails extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference("Students");
         databaseReference = FirebaseDatabase.getInstance().getReference("Students");
+        tokenReference=FirebaseDatabase.getInstance().getReference("fcmToken");
 
         pd = new ProgressDialog(this);
         profilePicture = (ImageButton)findViewById(R.id.profileImage);
@@ -130,6 +132,8 @@ public class AddStudentDetails extends AppCompatActivity {
                         marks.put("Interest in",choice);
                         if (TextUtils.isEmpty(EXT)) marks.put("EXTRAS", "nothing");
                         else marks.put("EXTRAS", EXT);
+                        final String token = FirebaseInstanceId.getInstance().getToken();
+                        tokenReference.child(user.getUid()).setValue(token);
                         databaseReference.child(user.getUid()).child("Academics").setValue(marks)
                                 .addOnCompleteListener(AddStudentDetails.this, new OnCompleteListener<Void>() {
                                     @Override

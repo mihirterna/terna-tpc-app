@@ -44,7 +44,7 @@ public class CommitteeActivity extends AppCompatActivity implements View.OnClick
 
                 break;
             case R.id.notif:
-                startActivity(new Intent(CommitteeActivity.this, CommitteeSendNotification.class));
+                startActivity(new Intent(CommitteeActivity.this, CommitteeSendNotices.class));
 
                 break;
             case R.id.committeeProfile:

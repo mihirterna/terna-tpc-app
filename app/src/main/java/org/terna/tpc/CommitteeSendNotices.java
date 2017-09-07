@@ -26,7 +26,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommitteeSendNotification extends AppCompatActivity {
+public class CommitteeSendNotices extends AppCompatActivity {
     private String year,branch,title;
 
     private ProgressDialog pd;
@@ -49,8 +49,8 @@ public class CommitteeSendNotification extends AppCompatActivity {
         final Button submit = (Button) findViewById(R.id.pdfAddButton);
         pdfList=(ListView)findViewById(R.id.pdfList);
         noticeTitle= (EditText) findViewById(R.id.noticeTitle);
-        final StorageReference mStorage = FirebaseStorage.getInstance().getReference("Notifications");
-        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Notifications");
+        final StorageReference mStorage = FirebaseStorage.getInstance().getReference("Notices");
+        final DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Notices");
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,29 +86,29 @@ public class CommitteeSendNotification extends AppCompatActivity {
 
     @SuppressWarnings("VisibleForTests")
     private void uploadData() {
-        CommitteeSendNotification.this.runOnUiThread(new Runnable() {
+        CommitteeSendNotices.this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                 pd.show();
                 storagePath.child(title).putFile(uri)
-                        .addOnSuccessListener(CommitteeSendNotification.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        .addOnSuccessListener(CommitteeSendNotices.this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 pd.dismiss();
                                 list.add(year+" "+branch+" "+title);
-                                arrayAdapter = new ArrayAdapter(CommitteeSendNotification.this, R.layout.liststudentclass,R.id.tv1,list);
+                                arrayAdapter = new ArrayAdapter(CommitteeSendNotices.this, R.layout.liststudentclass,R.id.tv1,list);
                                 pdfList.setAdapter(arrayAdapter);
-                                Toast.makeText(CommitteeSendNotification.this,title+" is sent",Toast.LENGTH_LONG).show();
+                                Toast.makeText(CommitteeSendNotices.this,title+" is sent",Toast.LENGTH_LONG).show();
                             }
                         })
-                        .addOnFailureListener(CommitteeSendNotification.this, new OnFailureListener() {
+                        .addOnFailureListener(CommitteeSendNotices.this, new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         })
-                        .addOnProgressListener(CommitteeSendNotification.this, new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        .addOnProgressListener(CommitteeSendNotices.this, new OnProgressListener<UploadTask.TaskSnapshot>() {
                             @Override
                             public void onProgress(UploadTask.TaskSnapshot tt) {
                                 double progress = (100.0 * tt.getBytesTransferred() / tt.getTotalByteCount());

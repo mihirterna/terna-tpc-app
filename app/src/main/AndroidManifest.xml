@@ -43,9 +43,9 @@
         <activity android:name=".ProfileActivity" />
         <activity android:name=".CommitteeActivity" />
         <activity android:name=".StudentsList" />
-        <activity android:name=".Student_notification" />
+        <activity android:name=".Student_notices" />
         <activity android:name=".ListViewOnclick" />
-        <activity android:name=".CommitteeSendNotification"></activity>
+        <activity android:name=".CommitteeSendNotices"></activity>
     </application>
 
 </manifest>

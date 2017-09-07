@@ -7,22 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 public class StudentDashboardActivity extends AppCompatActivity {
-
-    private FirebaseAuth firebaseAuth;
-
+    private  FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
         firebaseAuth = FirebaseAuth.getInstance();
+
         if(firebaseAuth.getCurrentUser() == null){
             startActivity(new Intent(StudentDashboardActivity.this,LoginActivity.class));
             finish();
         }
+
         final Button addDetails = (Button)findViewById(R.id.add_Details);
         addDetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,7 +39,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         notifications.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StudentDashboardActivity.this,Student_notification.class));
+                startActivity(new Intent(StudentDashboardActivity.this,Student_notices.class));
             }
         });
         final Button checkStatus = (Button)findViewById(R.id.status_check);
@@ -71,4 +69,5 @@ public class StudentDashboardActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.student_dashboard_menu, menu);
         return true;
     }
+
 }
