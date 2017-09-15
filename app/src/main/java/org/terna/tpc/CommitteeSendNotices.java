@@ -34,7 +34,7 @@ public class CommitteeSendNotices extends AppCompatActivity {
     private DatabaseReference dataPath;
     private Uri uri;
     private List<String> list= new ArrayList<>();
-    private String extension,path;
+    private String extension,path,xyz;
     private ListView pdfList;
     private ArrayAdapter<String> arrayAdapter;
     private static final int File_Request_code = 1234;
@@ -42,7 +42,7 @@ public class CommitteeSendNotices extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_committee_send_notification);
+        setContentView(R.layout.activity_committee_send_notice);
         final Spinner yr = (Spinner) findViewById(R.id.yearChoice);
         pd = new ProgressDialog(this);
         final Spinner br = (Spinner) findViewById(R.id.branchChoice);

@@ -8,8 +8,11 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -67,7 +70,106 @@ public class AddStudentDetails extends AppCompatActivity {
         se = (EditText)findViewById(R.id.seMarks);
         te = (EditText)findViewById(R.id.teMarks);
         extra = (EditText)findViewById(R.id.extras);
+        fe.setImeActionLabel("", EditorInfo.IME_ACTION_NEXT);
+        se.setImeActionLabel("", EditorInfo.IME_ACTION_NEXT);
+        te.setImeActionLabel("", EditorInfo.IME_ACTION_NEXT);
+
+
         ch=(Spinner) findViewById(R.id.teamChoice);
+
+        fe.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+                public void beforeTextChanged (CharSequence s,int start, int count, int after){
+
+            }
+
+                @Override
+                public void onTextChanged (CharSequence s,int start, int before, int count){
+            }
+
+                @Override
+                public void afterTextChanged (Editable s){
+                    try {
+
+
+                        Integer val = Integer.parseInt(fe.getText().toString());
+                        if (val > 10.00) {
+                            fe.setError("Pointer should not be above 10");
+                        }
+                    }
+                    catch (NumberFormatException ne)
+                    {
+
+                    }
+            }
+
+
+
+        });
+        se.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged (CharSequence s,int start, int count, int after){
+
+            }
+
+            @Override
+            public void onTextChanged (CharSequence s,int start, int before, int count){
+            }
+
+            @Override
+            public void afterTextChanged (Editable s){
+                try {
+
+
+                    Integer val = Integer.parseInt(fe.getText().toString());
+                    if (val > 10.00) {
+                        fe.setError("Pointer should not be above 10");
+                    }
+                }
+                catch (NumberFormatException ne)
+                {
+
+                }
+            }
+
+
+
+        });
+        te.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged (CharSequence s,int start, int count, int after){
+
+            }
+
+            @Override
+            public void onTextChanged (CharSequence s,int start, int before, int count){
+            }
+
+            @Override
+            public void afterTextChanged (Editable s){
+                try {
+
+
+                    Integer val = Integer.parseInt(fe.getText().toString());
+                    if (val > 10.00) {
+                        fe.setError("Pointer should not be above 10");
+                    }
+                }
+                catch (NumberFormatException ne)
+                {
+
+                }
+            }
+
+
+
+        });
 
         final Button addToFirebase = (Button)findViewById(R.id.add_Details);
         addToFirebase.setOnClickListener(new View.OnClickListener() {

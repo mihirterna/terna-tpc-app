@@ -19,24 +19,23 @@
         />
 
     <Button
-        android:text="@string/check_status"
+        android:text="checkStudents"
         style="@style/MainActivityButton"
         android:drawableTop="@drawable/chk"
-        android:id="@+id/checkStudents"
-        android:layout_alignParentRight="true"
-        android:layout_alignBaseline="@id/listStudents"
+        android:id="@+id/checkStudent"
         android:layout_marginRight="50dp"
-        />
+        android:layout_above="@+id/notif"
+        android:layout_toEndOf="@+id/notif"
+        android:layout_marginStart="35dp" />
 
     <Button
-        android:text="Send Notifications"
+        android:text="Send Notices"
         style="@style/MainActivityButton"
         android:drawableTop="@drawable/ic_archive_black_50dp"
         android:id="@+id/notif"
         android:layout_marginTop="100dp"
-        android:layout_marginLeft="40dp"
-        android:layout_below="@+id/listStudents"
-        />
+        android:layout_marginLeft="55dp"
+        android:layout_below="@+id/listStudents" />
     <Button
         android:text="Profile"
         style="@style/MainActivityButton"
@@ -44,7 +43,7 @@
         android:id="@+id/committeeProfile"
         android:layout_alignBottom="@+id/notif"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="65dp" />
+        android:layout_marginEnd="75dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

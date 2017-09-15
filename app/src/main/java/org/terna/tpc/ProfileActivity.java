@@ -1,6 +1,7 @@
 package org.terna.tpc;
 
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Students").child(user.getUid());
         final StorageReference mPath = mStorage.child(user.getUid());
-
+        final String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/TPC";
         final ImageView profileImageView = (ImageView) findViewById(R.id.user_profile_photo);
         final TextView profileNameView = (TextView) findViewById(R.id.user_profile_name);
         final TextView profileEmailView = (TextView) findViewById(R.id.user_profile_email);
@@ -44,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
         final TextView profileStationView = (TextView) findViewById(R.id.user_profile_city);
         final TextView profileMarksView = (TextView) findViewById(R.id.user_profile_marks);
         final TextView profileExtrasView = (TextView) findViewById(R.id.user_profile_extras);
+        File dir = new File(filePath);
 
         ProfileActivity.this.runOnUiThread(new Runnable() {
             @Override
@@ -78,12 +82,13 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final File localFile = File.createTempFile("image","jpg");
+                    final File localFile = File.createTempFile("image","jpeg",getExternalFilesDir(null));
                     mPath.getFile(localFile)
                             .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                 @Override
                                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    profileImageView.setImageURI(Uri.fromFile(localFile));
+                                       profileImageView.setImageURI(Uri.fromFile(localFile));
+
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {

@@ -21,7 +21,7 @@ public class CommitteeActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_committee);
         list = (Button) findViewById(R.id.listStudents);
-        check = (Button) findViewById(R.id.checkStudents);
+        check = (Button) findViewById(R.id.checkStudent);
         notif = (Button) findViewById(R.id.notif);
         firebaseAuth=FirebaseAuth.getInstance();
         user=firebaseAuth.getCurrentUser();
@@ -40,7 +40,7 @@ public class CommitteeActivity extends AppCompatActivity implements View.OnClick
                 startActivity(new Intent(CommitteeActivity.this, StudentsList.class));
 
                 break;
-            case R.id.checkStudents:
+            case R.id.checkStudent:
 
                 break;
             case R.id.notif:

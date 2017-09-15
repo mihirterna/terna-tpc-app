@@ -27,7 +27,7 @@ public class StudentsList extends AppCompatActivity {
     private Spinner yr,br;
     private List<String> list= new ArrayList<>();
     private List<String> list1= new ArrayList<>();
-    private String year,branch,item;
+    private String year,branch;
     private Button bt;
     private ArrayAdapter<String> arrayAdapter;
     private DatabaseReference databaseReference,mPath;
