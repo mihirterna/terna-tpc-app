@@ -82,23 +82,31 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    final File localFile = File.createTempFile("image","jpeg",getExternalFilesDir(null));
-                    mPath.getFile(localFile)
-                            .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                       profileImageView.setImageURI(Uri.fromFile(localFile));
 
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("mihir",e.getMessage());
-                                    Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    File rootPath = new File(Environment.getExternalStorageDirectory(), "mjk");
+                    final File localFile =  new File(rootPath,"imageName.jpeg");
+                    if(localFile.exists())
+                    {
+                        profileImageView.setImageURI(Uri.fromFile(localFile));
 
-                                }
-                            });
+                    }
+                    else {
+                        mPath.getFile(localFile)
+                                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.e("mihir", e.getMessage());
+                                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
+                                    }
+                                });
+                    }
                 } catch (Exception e) {
                     Log.e("mihir",e.getMessage());
                     Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();

@@ -37,7 +37,7 @@ public class ListViewOnclick extends AppCompatActivity {
         final StorageReference mPath = mStorage.child(uid);
         final ImageView profileImageView = (ImageView) findViewById(R.id.user_profile_photo);
         final TextView profileNameView = (TextView) findViewById(R.id.user_profile_name);
-        final TextView profileEmailView = (TextView) findViewById(R.id.user_profile_email);
+        final TextView profileInterest = (TextView) findViewById(R.id.user_profile_email);
         final TextView profileDobView = (TextView) findViewById(R.id.user_profile_dob);
         final TextView profileStationView = (TextView) findViewById(R.id.user_profile_city);
         final TextView profileMarksView = (TextView) findViewById(R.id.user_profile_marks);
@@ -53,10 +53,10 @@ public class ListViewOnclick extends AppCompatActivity {
                             HashMap<String,String> receivedInfo1 = (HashMap<String,String>) dataSnapshot.getValue();
                             HashMap<String, String> receivedAcademics = (HashMap<String, String>) dataSnapshot.child("Academics").getValue();
                             profileNameView.setText("Name: " + receivedInfo1.get("a"));
-                            profileEmailView.setText("E-Mail: " + receivedInfo1.get("b"));
                             profileDobView.setText("DateOfBirth: " + receivedInfo1.get("d"));
                             profileStationView.setText("Gender: " + receivedInfo1.get("e"));
                             profileMarksView.setText("FE: " + receivedAcademics.get("FE") + "\nSE: " + receivedAcademics.get("SE") + "\nTE: " + receivedAcademics.get("TE"));
+                            profileInterest.setText("Interest in: " + receivedAcademics.get("Interest in"));
                             profileExtrasView.setText(receivedAcademics.get("EXTRAS"));
                         } catch (Exception r) {
                             r.printStackTrace();
